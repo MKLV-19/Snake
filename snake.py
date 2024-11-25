@@ -1,5 +1,7 @@
 import pygame
 import random
+import sys
+import os
 
 # 初始化pygame
 pygame.init()
@@ -20,28 +22,38 @@ dis_height = 600
 # 定义贪吃蛇大小和速度, 生长速度
 snake_block = 30
 snake_speed = 10
-snake_growth = 2
+snake_growth = 5
 
 # 创建屏幕对象
 dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('贪吃曹')
+pygame.display.set_caption('碳吃蛇')
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 # 加载蛇头图片
-snake_head_image = pygame.image.load(r'D:\python_EX\Snake\new_head.jpg')
+snake_head_image = pygame.image.load(resource_path(os.path.join("assets", "new_head.jpg")))
 snake_head_image = pygame.transform.scale(snake_head_image, (snake_block, snake_block))
 
 # 加载身体图片 
-snake_body_image = pygame.image.load(r'D:\python_EX\Snake\new_body.jpg')
+snake_body_image = pygame.image.load(resource_path(os.path.join("assets", "new_body.jpg")))
 snake_body_image = pygame.transform.scale(snake_body_image, (snake_block, snake_block))
 
 # 加载转身图片
-snake_turnleft_image = pygame.image.load(r'D:\python_EX\Snake\new_turning_left.jpg')
+snake_turnleft_image = pygame.image.load(resource_path(os.path.join("assets", "new_turning_left.jpg")))
 snake_turnleft_image = pygame.transform.scale(snake_turnleft_image, (snake_block, snake_block))
-snake_turnright_image = pygame.image.load(r'D:\python_EX\Snake\new_turning_right.jpg')
+snake_turnright_image = pygame.image.load(resource_path(os.path.join("assets", "new_turning_right.jpg")))
 snake_turnright_image = pygame.transform.scale(snake_turnright_image, (snake_block, snake_block))
 
 # 加载食物图片
-food_image = pygame.image.load(r"D:\python_EX\Snake\head.jpg")
+food_image = pygame.image.load(resource_path(os.path.join("assets", "head.jpg")))
 food_image = pygame.transform.scale(food_image, (snake_block, snake_block))
 
 # 定义时钟
@@ -166,10 +178,10 @@ def gameLoop():
             del snake_List[0]
             del snake_rotate_angle_list[0]
 
-        # 自我碰撞判定
-        for x in snake_List[:-1]:
-            if x == snake_Head:
-                game_close = True
+        # # 自我碰撞判定
+        # for x in snake_List[:-1]:
+        #     if x == snake_Head:
+        #         game_close = True
 
         our_snake(snake_block, snake_List, snake_rotate_angle_list)
 
